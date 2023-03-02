@@ -1,14 +1,11 @@
 USE [sports]
 GO
 
-/****** Object:  StoredProcedure [ncaa_cbb].[MERGE_Teams]    Script Date: 2/25/2023 10:17:12 AM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
-
-
 
 -- =============================================
 -- Author:      <Author, , Awin>
