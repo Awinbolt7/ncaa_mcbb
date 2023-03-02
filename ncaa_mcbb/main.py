@@ -1,6 +1,6 @@
 try:
     #init globals
-    from config import config, cbb, globals
+    from config import config, globals
     import os,datetime,requests, pandas as pd
     #pd.set_option('display.max_columns', None)
     over_write, sql_import = False, True
@@ -847,16 +847,16 @@ for k in cbb.relative_url_dict:
     endpoints_list = cbb.relative_url_dict[k]
     print(colors.logging_color + 'Trying ' + colors.light_success_color + str(k) + colors.logging_color + ' endpoints from sport ...')
     for endpoint in endpoints_list:
-            # if k == call_list[0]:
-            #     if endpoint == 'LeagueHierarchy':
-            #         status, status_code = wrapper.wrapper_league_hierarchy()
+            if k == call_list[0]:
+                if endpoint == 'LeagueHierarchy':
+                    status, status_code = wrapper.wrapper_league_hierarchy()
 
-            # if k == call_list[1]:
-            #     if endpoint == 'Games/{season}':
-            #         status, status_code = wrapper.wrapper_game_schedules()
+            if k == call_list[1]:
+                if endpoint == 'Games/{season}':
+                    status, status_code = wrapper.wrapper_game_schedules()
                                         
-            #     if endpoint == 'PlayerGameStatsByDate/{date}':
-            #         status, status_code = wrapper.wrapper_game_stats()
+                if endpoint == 'PlayerGameStatsByDate/{date}':
+                    status, status_code = wrapper.wrapper_game_stats()
                     
             if k == call_list[2]:
                 if endpoint == 'Players':

@@ -4,7 +4,6 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-
 -- =============================================
 -- Author:      <Author, , Awin>
 -- Create Date: <Create Date, , 02.09.23>

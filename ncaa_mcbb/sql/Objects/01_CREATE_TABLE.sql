@@ -3,7 +3,8 @@ GO
 
 IF NOT EXISTS (SELECT * FROM [sys].[tables] WHERE [name] = 'Conferences')
 BEGIN
-	CREATE TABLE [ncaa_cbb].[Conferences](
+	CREATE TABLE [ncaa_cbb].[Conferences]
+	(
 		[ConferenceID] [smallint] NOT NULL,
 		[ConferenceName] [nvarchar](50) NOT NULL,
 		[Created] [datetime] NULL,
@@ -14,7 +15,8 @@ GO
 
 IF NOT EXISTS (SELECT * FROM [sys].[tables] WHERE [name] = 'Teams')
 BEGIN
-	CREATE TABLE [ncaa_cbb].[Teams](
+	CREATE TABLE [ncaa_cbb].[Teams]
+	(
 		[TeamID] [smallint] NOT NULL,
 		[TeamKey] [nvarchar](10) NULL,
 		[TeamActive] [bit] NOT NULL DEFAULT(0),
@@ -36,7 +38,8 @@ GO
 
 IF NOT EXISTS (SELECT * FROM [sys].[tables] WHERE [name] = 'Stadiums')
 BEGIN
-	CREATE TABLE [ncaa_cbb].[Stadiums](
+	CREATE TABLE [ncaa_cbb].[Stadiums]
+	(
 		[StadiumID] [int] NULL,
 		[StadiumActive] [bit] NULL,
 		[StadiumName] [nvarchar](255) NULL,
@@ -53,10 +56,11 @@ BEGIN
 	)
 END
 GO
-EXEC ncaa_cbb.MERGE_Stadiums
+
 IF NOT EXISTS (SELECT * FROM [sys].[tables] WHERE [name] = 'ConferenceTeams')
 BEGIN
-	CREATE TABLE [ncaa_cbb].[Conferenceteams](
+	CREATE TABLE [ncaa_cbb].[Conferenceteams]
+	(
 		[ConferenceID] [smallint] NULL,
 		[TeamID] [smallint] NULL,
 		[GlobalTeamID] [bigint] NULL,
@@ -68,7 +72,8 @@ GO
 
 IF NOT EXISTS (SELECT * FROM [sys].[tables] WHERE [name] = 'StadiumTeams')
 BEGIN
-	CREATE TABLE [ncaa_cbb].[StadiumTeams](
+	CREATE TABLE [ncaa_cbb].[StadiumTeams]
+	(
 		[StadiumID] [int] NULL,
 		[TeamID] [smallint] NULL,
 		[GlobalTeamID] [bigint] NULL,
@@ -83,65 +88,65 @@ BEGIN
 
 	CREATE TABLE [ncaa_cbb].[GameStats]
 	(
-	[StatID] [bigint] NULL,
-	[TeamID] [smallint] NULL,
-	[PlayerID] [bigint] NULL,
-	[SeasonType] [tinyint] NULL,
-	[Season] [nvarchar](5) NULL,
-	[PlayerName] [nvarchar](255) NULL,
-	[Team] [nvarchar](25) NULL,
-	[Position] [nvarchar](5) NULL,
-	[InjuryStatus] [nvarchar](75) NULL,
-	[InjuryBodyPart] [nvarchar](75) NULL,
-	[InjuryStartDate] [datetime] NULL,
-	[InjuryNotes] [nvarchar](4000) NULL,
-	[OpponentRank] [smallint] NULL,
-	[OpponentPositionRank] [smallint] NULL,
-	[GlobalTeamID] [bigint] NULL,
-	[GameID] [bigint] NULL,
-	[OpponentID] [smallint] NULL,
-	[Opponent] [nvarchar](25) NULL,
-	[Day] [datetime] NULL,
-	[DateTime] [datetime] NULL,
-	[HomeOrAway] [nvarchar](10) NULL,
-	[IsGameOver] [bit] NULL DEFAULT(1),
-	[GlobalGameID] [bigint] NULL,
-	[GlobalOpponentID] [bigint] NULL,
-	[StatUpdated] [datetime] NULL,
-	[Games] [tinyint] NULL,
-	[Minutes] [smallint] NULL,
-	[FieldGoalsMade] [smallint] NULL,
-	[FieldGoalsAttempted] [smallint] NULL,
-	[FieldGoalsPercentage] [decimal](18,9) NULL,
-	[EffectiveFieldGoalsPercentage] [decimal](18,9) NULL,
-	[TwoPointersMade] [smallint] NULL,
-	[TwoPointersAttempted] [smallint] NULL,
-	[ThreePointersMade] [smallint] NULL,
-	[ThreePointersAttempted] [smallint] NULL,
-	[FreeThrowsMade] [smallint] NULL,
-	[FreeThrowsAttempted] [smallint] NULL,
-	[OffensiveRebounds] [smallint] NULL,
-	[DefensiveRebounds] [smallint] NULL,
-	[Rebounds] [smallint] NULL,
-	[OffensiveReboundsPercentage] [decimal](18,9) NULL,
-	[DefensiveReboundsPercentage] [decimal](18,9) NULL,
-	[TotalReboundsPercentage] [decimal](18,9) NULL,
-	[Assists] [smallint] NULL,
-	[Steals] [smallint] NULL,
-	[BlockedShots] [smallint] NULL,
-	[Turnovers] [smallint] NULL,
-	[PersonalFouls] [smallint] NULL,
-	[Points] [smallint] NULL,
-	[TrueShootingAttempts] [decimal](18,9) NULL,
-	[TrueShootingPercentage] [decimal](18,9) NULL,
-	[PlayerEfficiencyRating] [decimal](18,9) NULL,
-	[AssistsPercentage] [decimal](18,9) NULL,
-	[StealsPercentage] [decimal](18,9) NULL,
-	[BlocksPercentage] [decimal](18,9) NULL,
-	[TurnOversPercentage] [decimal](18,9) NULL,
-	[UsageRatePercentage] [decimal](18,9) NULL,
-	[Created] [datetime] NULL,
-	[LastUpdated] [datetime] NULL
+		[StatID] [bigint] NULL,
+		[TeamID] [smallint] NULL,
+		[PlayerID] [bigint] NULL,
+		[SeasonType] [tinyint] NULL,
+		[Season] [nvarchar](5) NULL,
+		[PlayerName] [nvarchar](255) NULL,
+		[Team] [nvarchar](25) NULL,
+		[Position] [nvarchar](5) NULL,
+		[InjuryStatus] [nvarchar](75) NULL,
+		[InjuryBodyPart] [nvarchar](75) NULL,
+		[InjuryStartDate] [datetime] NULL,
+		[InjuryNotes] [nvarchar](4000) NULL,
+		[OpponentRank] [smallint] NULL,
+		[OpponentPositionRank] [smallint] NULL,
+		[GlobalTeamID] [bigint] NULL,
+		[GameID] [bigint] NULL,
+		[OpponentID] [smallint] NULL,
+		[Opponent] [nvarchar](25) NULL,
+		[Day] [datetime] NULL,
+		[DateTime] [datetime] NULL,
+		[HomeOrAway] [nvarchar](10) NULL,
+		[IsGameOver] [bit] NULL DEFAULT(1),
+		[GlobalGameID] [bigint] NULL,
+		[GlobalOpponentID] [bigint] NULL,
+		[StatUpdated] [datetime] NULL,
+		[Games] [tinyint] NULL,
+		[Minutes] [smallint] NULL,
+		[FieldGoalsMade] [smallint] NULL,
+		[FieldGoalsAttempted] [smallint] NULL,
+		[FieldGoalsPercentage] [decimal](18,9) NULL,
+		[EffectiveFieldGoalsPercentage] [decimal](18,9) NULL,
+		[TwoPointersMade] [smallint] NULL,
+		[TwoPointersAttempted] [smallint] NULL,
+		[ThreePointersMade] [smallint] NULL,
+		[ThreePointersAttempted] [smallint] NULL,
+		[FreeThrowsMade] [smallint] NULL,
+		[FreeThrowsAttempted] [smallint] NULL,
+		[OffensiveRebounds] [smallint] NULL,
+		[DefensiveRebounds] [smallint] NULL,
+		[Rebounds] [smallint] NULL,
+		[OffensiveReboundsPercentage] [decimal](18,9) NULL,
+		[DefensiveReboundsPercentage] [decimal](18,9) NULL,
+		[TotalReboundsPercentage] [decimal](18,9) NULL,
+		[Assists] [smallint] NULL,
+		[Steals] [smallint] NULL,
+		[BlockedShots] [smallint] NULL,
+		[Turnovers] [smallint] NULL,
+		[PersonalFouls] [smallint] NULL,
+		[Points] [smallint] NULL,
+		[TrueShootingAttempts] [decimal](18,9) NULL,
+		[TrueShootingPercentage] [decimal](18,9) NULL,
+		[PlayerEfficiencyRating] [decimal](18,9) NULL,
+		[AssistsPercentage] [decimal](18,9) NULL,
+		[StealsPercentage] [decimal](18,9) NULL,
+		[BlocksPercentage] [decimal](18,9) NULL,
+		[TurnOversPercentage] [decimal](18,9) NULL,
+		[UsageRatePercentage] [decimal](18,9) NULL,
+		[Created] [datetime] NULL,
+		[LastUpdated] [datetime] NULL
 	)
 
 END
@@ -194,7 +199,8 @@ GO
 
 IF NOT EXISTS (SELECT * FROM [sys].[tables] WHERE [name] = 'ActivePlayers')
 BEGIN
-	CREATE TABLE [ncaa_cbb].[ActivePlayers](
+	CREATE TABLE [ncaa_cbb].[ActivePlayers]
+	(
 		[PlayerID] [bigint] NULL,
 		[FirstName] [varchar](50) NULL,
 		[LastName] [varchar](75) NULL,

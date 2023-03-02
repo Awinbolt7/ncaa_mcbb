@@ -20,7 +20,7 @@ GO
 -- =============================================
 --
 -- =============================================
-EXEC [ncaa_cbb].[MERGE_GameStats]
+
 CREATE PROCEDURE [ncaa_cbb].[MERGE_GameStats]
 AS
 BEGIN
@@ -289,18 +289,4 @@ BEGIN
 
 END
 GO
-
-
-SELECT COUNT(*) FROM ETL.game_gamestats
-
-SELECT COUNT(*) FROM ETL.[Game_GameStats]
-SELECT COUNT(*) FROM ncaa_cbb.GameStats
-
-SELECT DISTINCT PlayerID FROM ncaa_cbb.GameStats
-
-
---ALK,V,NXPI
-
-TRUNCATE TABLE ETL.game_gamestats
-
 
