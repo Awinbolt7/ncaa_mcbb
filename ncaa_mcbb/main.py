@@ -47,8 +47,7 @@ class sdio(object):
     base_url = config.base_url
     def get_payload(self,base_url,sport,response_format,api_type,dict_endpoint,header):
         try:
-            #https://api.sportsdata.io/v3/cbb/scores/json/LeagueHierarchy
-            #https://api.sportsdata.io/v3/cbb/scores/json/League/LeagueHierarchy
+            
             endpoint = base_url + sport + '/' + api_type  + '/' + response_format + '/' + dict_endpoint
             s = requests.get(endpoint, headers=header)
             
@@ -118,47 +117,7 @@ class cbb(object):
     
     def League_LeagueHierarchy(self,payload):
         try:
-            #{"ConferenceID":1,
-            #"Name":"American Athletic",
-            #"Teams":[{
-                # "TeamID":4,
-                # "Key":"CIN",
-                # "Active":true,
-                # "School":"Cincinnati",
-                # "Name":"Bearcats",
-                # "ApRank":null,
-                # "Wins":16,
-                # "Losses":8,
-                # "ConferenceWins":7,
-                # "ConferenceLosses":4,
-                # "GlobalTeamID":60000004,
-                # "ConferenceID":1,
-                # "Conference":"American Athletic",
-                # "TeamLogoUrl":"https:\/\/s3-us-west-2.amazonaws.com\/static.fantasydata.com\/logos\/ncaa\/4.png",
-                # "ShortDisplayName":"CIN",
-                # "Stadium":{
-                    # "StadiumID":86,
-                    # "Active":true,
-                    # "Name":"Fifth Third Arena",
-                    # "Address":null,
-                    # "City":"Cincinnati",
-                    # "State":"OH",
-                    # "Zip":null,
-                    # "Country":null,
-                    # "Capacity":12012,
-                    # "GeoLat":39.131101,
-                    # "GeoLong":-84.514207}},
-            # cols = [#conference
-            #         'ConferenceID','ConferenceName',
-            #         #Team
-            #         'TeamID','TeamKey','TeamActive','School',
-            #         'TeamName','ApRank','Wins','Losses','ConferenceWins','ConferenceLosses',
-            #         'GlobalTeamID','ConferenceID','Conference','TeamLogoUrl',
-            #         'ShortDisplayName',
-            #         #stadium
-            #         'StadiumID','StadiumActive','StadiumName',
-            #         'Address','City','State','Zip',
-            #         'Country','Capacity','GeoLat','GeoLong']
+           
             #master_df = pd.DataFrame(columns=cols)
             master_df = pd.DataFrame()
             if payload.ok:
@@ -234,56 +193,6 @@ class cbb(object):
     
     def Game_Schedules(self,payload):
         try:
-                        #{"GameID":11851,
-            # "Season":2018,
-            # "SeasonType":1,
-            # "Status":"Final",
-            # "Day":"2017-11-10T00:00:00",
-            # "DateTime":"2017-11-10T12:00:00",
-            # "AwayTeam":"SAVST",
-            # "HomeTeam":"CIN",
-            # "AwayTeamID":194,
-            # "HomeTeamID":4,
-            # "AwayTeamScore":41,
-            # "HomeTeamScore":57,
-            # "Updated":"2018-10-22T16:06:45",
-            # "Period":"F",
-            # "TimeRemainingMinutes":null,
-            # "TimeRemainingSeconds":null,
-            ## "PointSpread":null,
-            ## "OverUnder":null,
-            ## "AwayTeamMoneyLine":null,
-            ## "HomeTeamMoneyLine":null,
-            # "GlobalGameID":60011851,
-            # "GlobalAwayTeamID":60000194,
-            # "GlobalHomeTeamID":60000004,
-            # "TournamentID":null,
-            # "Bracket":null,
-            # "Round":null,
-            # "AwayTeamSeed":null,
-            # "HomeTeamSeed":null,
-            ## "AwayTeamPreviousGameID":null,
-            ## "HomeTeamPreviousGameID":null,
-            ## "AwayTeamPreviousGlobalGameID":null,
-            ## "HomeTeamPreviousGlobalGameID":null,
-            # "TournamentDisplayOrder":null,
-            # "TournamentDisplayOrderForHomeTeam":"Scrambled",
-            # "IsClosed":true,
-            # "GameEndDateTime":"2017-11-10T14:30:00",
-            # "HomeRotationNumber":null,
-            # "AwayRotationNumber":null,
-            # "TopTeamPreviousGameId":null,
-            # "BottomTeamPreviousGameId":null,
-            # "Channel":"ESP3",
-            # "NeutralVenue":null,
-            # "AwayPointSpreadPayout":null,
-            # "HomePointSpreadPayout":null,
-            # "OverPayout":null,
-            # "UnderPayout":null,
-            # "DateTimeUTC":"2017-11-10T17:00:00",
-            # "Attendance":null,
-            # "Stadium":null,
-            # "Periods":[]}
             master_df = pd.DataFrame()
             if payload.ok:
                 #payloads are lists
@@ -430,11 +339,6 @@ class cbb(object):
                     append_df.reset_index(inplace=True, drop=True)
                     master_df = pd.concat([master_df,append_df],axis=0)
                     
-                    #print(master_df)
-            
-            
-            #print(master_df.dtypes)
-                           
             return True, master_df 
         except Exception as e:
             print(colors.fail_color + str(e))
@@ -442,77 +346,7 @@ class cbb(object):
         
     def Game_PlayerGameStatsByDate(self,payload):
         try:
-            #{"StatID":374031,
-            #"TeamID":177,
-            #"PlayerID":60001145,
-            # "SeasonType":1,
-            # "Season":2018,
-            # "Name":"Jimond Ivey",
-            # "Team":"AKRON",
-            # "Position":"G",
-            # # "FanDuelSalary":null,
-            # # "DraftKingsSalary":null,
-            # # "FantasyDataSalary":null,
-            # #"YahooSalary":null,
-            # "InjuryStatus":null,
-            # "InjuryBodyPart":null,
-            # "InjuryStartDate":null,
-            # "InjuryNotes":null,
-            # # "FanDuelPosition":null,
-            # # "DraftKingsPosition":null,
-            # # "YahooPosition":null,
-            # "OpponentRank":null,
-            # "OpponentPositionRank":null,
-            # "GlobalTeamID":60000177,
-            # "GameID":16187,
-            # "OpponentID":179,
-            # "Opponent":"BUF",
-            # "Day":"2018-02-27T00:00:00",
-            # "DateTime":"2018-02-27T19:00:00",
-            # "HomeOrAway":"AWAY",
-            # "IsGameOver":true,
-            # "GlobalGameID":60016187,
-            # "GlobalOpponentID":60000179,
-            # "Updated":"2021-02-02T16:04:28",
-            # "Games":1,
-            # "FantasyPoints":32.9,
-            # "Minutes":39,
-            # "FieldGoalsMade":6,
-            # "FieldGoalsAttempted":13,
-            # "FieldGoalsPercentage":43.7,
-            # "EffectiveFieldGoalsPercentage":52.4,
-            # "TwoPointersMade":2,
-            # "TwoPointersAttempted":7,
-            # "TwoPointersPercentage":34.9,
-            # "ThreePointersMade":3,
-            # "ThreePointersAttempted":7,
-            # "ThreePointersPercentage":52.4,
-            # "FreeThrowsMade":2,
-            # "FreeThrowsAttempted":2,
-            # "FreeThrowsPercentage":104.9,
-            # "OffensiveRebounds":3,
-            # "DefensiveRebounds":4,
-            # "Rebounds":8,
-            # "OffensiveReboundsPercentage":12.1,
-            # "DefensiveReboundsPercentage":18.1,
-            # "TotalReboundsPercentage":15.0,
-            # "Assists":7,
-            # "Steals":0,
-            # "BlockedShots":0,
-            # "Turnovers":1,
-            # "PersonalFouls":3,
-            # "Points":16,
-            # "TrueShootingAttempts":13.5,
-            # "TrueShootingPercentage":60.5,
-            # "PlayerEfficiencyRating":19.4,
-            # "AssistsPercentage":33.0,
-            # "StealsPercentage":0.0,
-            # "BlocksPercentage":0.0,
-            # "TurnOversPercentage":7.9,
-            # "UsageRatePercentage":19.6,
-            # # "FantasyPointsFanDuel":32.9,
-            # # "FantasyPointsDraftKings":35.4,"
-            # # FantasyPointsYahoo":null}
+
             master_df = pd.DataFrame()
             if payload.ok:
                 #payloads are lists
@@ -646,29 +480,7 @@ class cbb(object):
 
     def Players_Active(self,payload):
         try:
-            #{"PlayerID":60000075,
-            # "FirstName":"Jalen",
-            # "LastName":"Reynolds",
-            # "TeamID":305,
-            # "Team":"SOUTH",
-            # "Jersey":12,
-            # "Position":"F",
-            # "Class":"Junior",
-            # "Height":78,
-            # "Weight":245,
-            # "BirthCity":"Detroit",
-            # "BirthState":"MI",
-            # "HighSchool":"Brewster Academy",
-            # "SportRadarPlayerID":"",
-            # "RotoworldPlayerID":null,
-            # "RotoWirePlayerID":null,
-            # "FantasyAlarmPlayerID":null,
-            # "GlobalTeamID":60000305,
-            # "InjuryStatus":"Scrambled",
-            # "InjuryBodyPart":"Scrambled",
-            # "InjuryNotes":"Scrambled",
-            # "InjuryStartDate":null}
-            
+
             master_df = pd.DataFrame()
             if payload.ok:
                 #payloads are lists
@@ -723,7 +535,7 @@ class cbb(object):
             return False, None
 
 class wrapper(object):
-    def wrapper_league_hierarchy(self):
+    def wrapper_league_hierarchy(self,endpoint):
         try:
             status, s = sdio.get_payload(base_url=config.base_url,sport=cbb.relative_sport,response_format=cbb.relative_response_format,api_type=cbb.relative_api_type[0],dict_endpoint=endpoint,header=cbb.request_header)
             if status:
@@ -741,7 +553,7 @@ class wrapper(object):
         except ValueError:
             return False, ValueError
     
-    def wrapper_game_schedules(self):
+    def wrapper_game_schedules(self,endpoint):
         try:
             for year in cbb.years_list:
                 print(str(year))
@@ -762,7 +574,7 @@ class wrapper(object):
         except ValueError:
             return False, ValueError
 
-    def wrapper_game_stats(self):
+    def wrapper_game_stats(self,endpoint):
         try:
             
             schema, table, i = 'etl', 'Game_GameStats', 0
@@ -773,13 +585,8 @@ class wrapper(object):
                 date_list = convert_date(int(year))
                 for d in date_list:
                     print(colors.logging_color + str(d))
-                    #print(type(d))
                     dobj = datetime.datetime.strptime(d, '%Y-%b-%d')
-                    #begin_season, end_season = datetime.datetime.strptime('2022-11-01', '%Y-%m-%d'), datetime.datetime.strptime('2022-03-14', '%Y-%m-%d')
-                    #only get regular season
-                    # print(dobj)
-                    # print(begin_season)
-                    # print(end_season)
+                    #This needs work
                     if dobj.month > 3:
                         continue
                     data_check = False
@@ -818,63 +625,48 @@ class wrapper(object):
         except ValueError:
             return False, ValueError
         
-    def wrapper_players_active(self):
+    def wrapper_players_active(self,endpoint):
         try:
 
             status, s = sdio.get_payload(base_url=config.base_url,sport=cbb.relative_sport,response_format=cbb.relative_response_format,api_type=cbb.relative_api_type[0],dict_endpoint=endpoint,header=cbb.request_header)
-            # urlist[:-1]: - once fully loaded, check via sql to only load in latest years
             if status:
                     status, df = cbb.Players_Active(payload=s)
                     if status:
                         x=1
                         schema, table = 'etl', 'Players_Active'
                         print(colors.light_fail_color + 'truncing {}.{}...'.format(schema, table))
-                        #alcsql.truncate_table(schema,table)
+                        alcsql.truncate_table(schema,table)
                         alcsql.import_table(df,schema,table)
-                        # schema, procedure_list = 'ncaa_cbb', ['MERGE_Conferences','MERGE_ConferenceTeams','MERGE_Stadiums','MERGE_StadiumTeams','MERGE_Teams']
-                        # for procedure in procedure_list:
-                        #     print(colors.light_success_color + 'Executing {}.{} SP...'.format(schema, procedure))
-                        #     alcsql.execute_stored_proc(schema,procedure)
+                        schema, procedure_list = 'ncaa_cbb', ['MERGE_ActivePlayers']
+                        for procedure in procedure_list:
+                            print(colors.light_success_color + 'Executing {}.{} SP...'.format(schema, procedure))
+                            alcsql.execute_stored_proc(schema,procedure)
 
             return True, 200 
         except ValueError:
             return False, ValueError
 
-sdio, cbb, wrapper = sdio(), cbb(), wrapper()
-call_list = list(cbb.relative_url_dict.keys())
+# Check if this program is being run as the main program
+#This needs a function wrap
+if __name__ == "__main__":
+    sdio, cbb, wrapper = sdio(), cbb(), wrapper()
+    call_list = list(cbb.relative_url_dict.keys())
 
-for k in cbb.relative_url_dict:
-    endpoints_list = cbb.relative_url_dict[k]
-    print(colors.logging_color + 'Trying ' + colors.light_success_color + str(k) + colors.logging_color + ' endpoints from sport ...')
-    for endpoint in endpoints_list:
-            if k == call_list[0]:
-                if endpoint == 'LeagueHierarchy':
-                    status, status_code = wrapper.wrapper_league_hierarchy()
+    for k in cbb.relative_url_dict:
+        endpoints_list = cbb.relative_url_dict[k]
+        print(colors.logging_color + 'Trying ' + colors.light_success_color + str(k) + colors.logging_color + ' endpoints from sport ...')
+        for endpoint in endpoints_list:
+                if k == call_list[0]:
+                    if endpoint == 'LeagueHierarchy':
+                        status, status_code = wrapper.wrapper_league_hierarchy(endpoint)
 
-            if k == call_list[1]:
-                if endpoint == 'Games/{season}':
-                    status, status_code = wrapper.wrapper_game_schedules()
-                                        
-                if endpoint == 'PlayerGameStatsByDate/{date}':
-                    status, status_code = wrapper.wrapper_game_stats()
-                    
-            if k == call_list[2]:
-                if endpoint == 'Players':
-                    status, status_code = wrapper.wrapper_players_active()
-                # if endpoint == 'Player/{playerid}':
-                    # status, df = alcsql.execute_query('SELECT DISTINCT [PlayerID] FROM [ncaa_cbb].')
-                    # for year in cbb.years_list:
-                    #     print(str(year))
-                    #     status, s = sdio.get_payload(base_url=config.base_url,sport=cbb.relative_sport,response_format=cbb.relative_response_format,api_type=cbb.relative_api_type[0],dict_endpoint=endpoint.replace('{playerID}',str(year)),header=cbb.request_header)
-                    #     # urlist[:-1]: - once fully loaded, check via sql to only load in latest years
-                    #     if status:
-                    #             status, df = cbb.Game_Schedules(payload=s)
-                    #             if status:
-                    #                 schema, table = 'etl', 'Game_Schedules'
-                    #                 print(colors.light_fail_color + 'truncing {}.{}...'.format(schema, table))
-                    #                 #alcsql.truncate_table(schema,table)
-                    #                 alcsql.import_table(df,schema,table)
-                    #                 #schema, procedure_list = 'ncaa_cbb', ['MERGE_Conferences','MERGE_ConferenceTeams','MERGE_Stadiums','MERGE_StadiumTeams','MERGE_Teams']
-                    #                 #for procedure in procedure_list:
-                    #                     #print(colors.light_success_color + 'Executing {}.{} SP...'.format(schema, procedure))
-                    #                     #alcsql.execute_stored_proc(schema,procedure)
+                if k == call_list[1]:
+                    if endpoint == 'Games/{season}':
+                        status, status_code = wrapper.wrapper_game_schedules(endpoint)
+                                            
+                    if endpoint == 'PlayerGameStatsByDate/{date}':
+                        status, status_code = wrapper.wrapper_game_stats(endpoint)
+                        
+                if k == call_list[2]:
+                    if endpoint == 'Players':
+                        status, status_code = wrapper.wrapper_players_active(endpoint)
