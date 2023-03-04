@@ -13,6 +13,8 @@ GO
 -- Description: <Description, , A view that selects from GameSchedules. >
 -- Notes:
 -- <1, , Created>
+-- <2, , Fixed IS NOT NULL on scores AW 03.02.23>
+-- <3, , Added DateKey AW 03.03.23>
 -- =============================================
 
 -- =============================================
@@ -36,7 +38,8 @@ CREATE VIEW [ncaa_cbb].[vw_GameScheduleFacts] AS
 SELECT 
 	[GameID], 
 	[GameStatus], 
-	[GameDay], 
+	[GameDay],
+	[DateKey],
 	[GameDateTime], 
 	[AwayTeamID], 
 	[HomeTeamID], 

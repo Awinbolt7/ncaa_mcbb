@@ -13,6 +13,7 @@ GO
 -- Description: <Description, , A view that provisions a date range based on GameStats. >
 -- Notes:
 -- <1, , Created>
+-- <2, , Added DateKey 03.03.23 AW>
 -- =============================================
 
 -- =============================================
@@ -53,6 +54,7 @@ SELECT
 	GS.[OpponentID],
 	GS.[Opponent],
 	GS.[Day],
+	GS.[DateKey],
 	GS.[DateTime],
 	GS.[HomeOrAway],
 	GS.[IsGameOver],
