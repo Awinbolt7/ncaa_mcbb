@@ -1,6 +1,7 @@
-USE [sports];
+USE [sports]
 GO
 
+/****** Object:  View [ncaa_cbb].[vw_Calendar]    Script Date: 3/2/2023 6:25:14 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -9,18 +10,18 @@ GO
 
 -- =============================================
 -- Author:      <Author, , Awin>
--- Create Date: <Create Date, , 02.26.23>
--- Description: <Description, , A view that provisions a date range based on vw_GameStats. >
+-- Create Date: <Create Date, , 03.03.23>
+-- Description: <Description, , A view that provisions a date range based on vw_GameStateFacts. >
 -- Notes:
--- <1, , Created>
+-- <1, , Created> 
+-- <2, , Changed from Snake to Pascal 03.03.23 AW>
 -- =============================================
 
 -- =============================================
 -- Notes
 -- =============================================
--- This needs to go back into a subquery in favor of a CTE AW
+--
 -- =============================================
-
 IF EXISTS (
 		SELECT * 
 		FROM sys.views v
@@ -40,12 +41,12 @@ WITH [calendar] AS
 		(
 			SELECT
 				MIN([day])
-			FROM [ncaa_cbb].[vw_GameStats]
+			FROM [ncaa_cbb].[vw_GameStatFacts]
 		), 
 		(
 			SELECT
 				MAX([day])
-			FROM [ncaa_cbb].[vw_GameStats]
+			FROM [ncaa_cbb].[vw_GameStatFacts]
 		)
 	) + 1
 )		
@@ -53,27 +54,29 @@ WITH [calendar] AS
 	(
 		SELECT
 			MIN([day])
-		FROM [ncaa_cbb].[vw_GameStats]
+		FROM [ncaa_cbb].[vw_GameStatFacts]
 	)
 )
 	FROM sys.all_objects a
 	CROSS JOIN sys.all_objects b
 )
 SELECT
-	ROW_NUMBER() OVER(ORDER BY [date]) AS [row_num],
-	[date],
-	CAST(TRIM(REPLACE(CAST(CAST([date] AS DATE) AS NVARCHAR(20)),'-','')) AS [bigint]) AS [date_key],
-	DATEADD(DAY,-6,DATEADD(DAY , 8-DATEPART(WEEKDAY,[date]),[date])) AS [week_start],
-	DATEADD(DAY , 8-DATEPART(WEEKDAY,[date]),[date]) AS [week_end],
-	CONVERT(NVARCHAR(2), [date], 101) AS [month_number],
-	CAST(FORMAT([date], 'MMMM') AS NVARCHAR(15)) AS [month_name],
-	CAST(LEFT(FORMAT([date], 'MMMM'),3) AS NVARCHAR(3)) AS [month_short_name],
-	CAST(YEAR([date]) AS SMALLINT) AS [year],
-	CAST(CAST(YEAR([date]) AS NVARCHAR) + ' ' + CAST(FORMAT([date], 'MMMM') AS NVARCHAR(15)) AS NVARCHAR(25)) AS [year_month],
-	CAST(CAST(YEAR([date]) AS NVARCHAR) + '-' + CONVERT(NVARCHAR(2), [date], 101) AS NVARCHAR(10)) AS [year_month_number],
-	DATEADD(YEAR,-1,[date]) AS [date_prior_year],
-	DATEADD(MONTH,-1,[date]) AS [date_prior_month],
-	CASE WHEN [date] > CAST(GETDATE() AS DATE) THEN 1 ELSE 0 END AS [is_future],
-	CASE WHEN [date] < DATEFROMPARTS ( DATEPART(yyyy, GETDATE()) - 1, 1, 1 ) THEN 1 ELSE 0 END AS [no_prior_year]
+	ROW_NUMBER() OVER(ORDER BY [date]) AS [RowNum],
+	[Date],
+	CAST(TRIM(REPLACE(CAST(CAST([date] AS DATE) AS NVARCHAR(20)),'-','')) AS [bigint]) AS [DateKey],
+	DATEADD(DAY,-6,DATEADD(DAY , 8-DATEPART(WEEKDAY,[date]),[date])) AS [WeekStart],
+	DATEADD(DAY , 8-DATEPART(WEEKDAY,[date]),[date]) AS [WeekEnd],
+	CONVERT(NVARCHAR(2), [date], 101) AS [MonthNumber],
+	CAST(FORMAT([date], 'MMMM') AS NVARCHAR(15)) AS [MonthName],
+	CAST(LEFT(FORMAT([date], 'MMMM'),3) AS NVARCHAR(3)) AS [MonthShortName],
+	CAST(YEAR([date]) AS SMALLINT) AS [Year],
+	CAST(CAST(YEAR([date]) AS NVARCHAR) + ' ' + CAST(FORMAT([date], 'MMMM') AS NVARCHAR(15)) AS NVARCHAR(25)) AS [YearMonth],
+	CAST(CAST(YEAR([date]) AS NVARCHAR) + '-' + CONVERT(NVARCHAR(2), [date], 101) AS NVARCHAR(10)) AS [YearMonthNumber],
+	DATEADD(YEAR,-1,[date]) AS [DatePriorYear],
+	DATEADD(MONTH,-1,[date]) AS [DatePriorMonth],
+	CASE WHEN [date] > CAST(GETDATE() AS DATE) THEN 1 ELSE 0 END AS [IsFuture],
+	CASE WHEN [date] < DATEFROMPARTS ( DATEPART(yyyy, GETDATE()) - 1, 1, 1 ) THEN 1 ELSE 0 END AS [NoPriorYear]
 FROM [calendar]
 GO
+
+
