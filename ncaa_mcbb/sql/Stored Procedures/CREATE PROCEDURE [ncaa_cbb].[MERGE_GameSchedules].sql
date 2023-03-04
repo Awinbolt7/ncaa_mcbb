@@ -34,6 +34,7 @@ BEGIN
 		GS.[SeasonType],
 		GS.[GameStatus],
 		GS.[GameDay],
+		CAST(TRIM(REPLACE(CAST(CAST([GameDay] AS DATE) AS NVARCHAR(20)),'-','')) AS [bigint]) AS [DateKey],
 		GS.[GameDateTime],
 		GS.[AwayTeam],
 		GS.[HomeTeam],
