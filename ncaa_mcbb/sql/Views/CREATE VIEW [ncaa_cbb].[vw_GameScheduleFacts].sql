@@ -48,7 +48,7 @@ SELECT
 	[GameEndDateTime], 
 	[Channel]
 FROM [ncaa_cbb].[GameSchedules]
-WHERE ([AwayTeamScore] <> null AND [HomeTeamScore] <> null)
+WHERE ([AwayTeamScore] IS NOT NULL AND [HomeTeamScore] IS NOT NULL)
 AND [GameStatus] IN ('F/OT', 'Final')
 
 GO
