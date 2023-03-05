@@ -534,6 +534,82 @@ class cbb(object):
             print(colors.fail_color + str(e))
             return False, None
 
+    def Teams(self,payload):
+        try:
+           
+            #master_df = pd.DataFrame(columns=cols)
+            master_df = pd.DataFrame()
+            if payload.ok:
+                #payloads are lists
+                payload = payload.json()
+                for row in payload:
+                    
+                    ConferenceID = row['ConferenceID']
+                    ConferenceName = row['Conference'],
+                    TeamID = row['TeamID'],
+                    TeamKey = row['Key'],
+                    TeamActive = row['Active'],
+                    School = row['School'],
+                    TeamName = row['Name'],
+                    ApRank = row['ApRank'],
+                    Wins = row['Wins'],
+                    Losses = row['Losses'],
+                    ConferenceWins = row['ConferenceWins'],
+                    ConferenceLosses = row['ConferenceLosses'],
+                    GlobalTeamID = row['GlobalTeamID'],
+                    TeamLogoUrl = row['TeamLogoUrl'],
+                    ShortDisplayName = row['ShortDisplayName'],
+                    if row['Stadium'] is not None:
+                        st = row['Stadium']
+                        StadiumID = st['StadiumID'],
+                        StadiumActive = st['Active'],
+                        StadiumName = st['Name'],
+                        Address = st['Address'],
+                        City = st['City'],
+                        State = st['State'],
+                        Zip = st['Zip'],
+                        Country = st['Country'],
+                        Capacity = st['Capacity'],
+                        GeoLat = st['GeoLat'],
+                        GeoLong = st['GeoLong']
+                    
+                    append_df = pd.DataFrame({
+                        'ConferenceID': ConferenceID,
+                        'ConferenceName': ConferenceName,
+                        'TeamID' : TeamID,
+                        'TeamKey' : TeamKey,
+                        'TeamActive' : TeamActive,
+                        'School' : School,
+                        'TeamName' : TeamName,
+                        'ApRank' : ApRank,
+                        'Wins' : Wins,
+                        'Losses' : Losses,
+                        'ConferenceWins' : ConferenceWins,
+                        'ConferenceLosses' : ConferenceLosses,
+                        'GlobalTeamID' : GlobalTeamID,
+                        'TeamLogoUrl' : TeamLogoUrl,
+                        'ShortDisplayName' : ShortDisplayName,
+                        'StadiumID' : StadiumID,
+                        'StadiumActive' : StadiumActive,
+                        'StadiumName' : StadiumName,
+                        'Address' : Address,
+                        'City' : City,
+                        'State' : State,
+                        'Zip' : Zip,
+                        'Country' : Country, 
+                        'Capacity' : Capacity,
+                        'GeoLat' : GeoLat,
+                        'GeoLong' : GeoLong
+                    })
+
+                    append_df.reset_index(inplace=True, drop=True)
+                    master_df = pd.concat([master_df,append_df],axis=0)
+               
+            return True, master_df 
+        except Exception as e:
+            print(colors.fail_color + str(e))
+            return False, None
+
 class wrapper(object):
     def wrapper_league_hierarchy(self,endpoint):
         try:
@@ -632,7 +708,6 @@ class wrapper(object):
             if status:
                     status, df = cbb.Players_Active(payload=s)
                     if status:
-                        x=1
                         schema, table = 'etl', 'Players_Active'
                         print(colors.light_fail_color + 'truncing {}.{}...'.format(schema, table))
                         alcsql.truncate_table(schema,table)
@@ -645,6 +720,27 @@ class wrapper(object):
             return True, 200 
         except ValueError:
             return False, ValueError
+
+    def wrapper_teams(self,endpoint):
+        try:
+            #https://api.sportsdata.io/v3/cbb/scores/json/teams?key=70080f481d684aaa9d060454e9c9c435
+            status, s = sdio.get_payload(base_url=config.base_url,sport=cbb.relative_sport,response_format=cbb.relative_response_format,api_type=cbb.relative_api_type[0],dict_endpoint=endpoint,header=cbb.request_header)
+            if status:
+                    status, df = cbb.Teams(payload=s)
+                    if status:
+                        schema, table = 'etl', 'League_LeagueHierarchy'
+                        print(colors.light_fail_color + 'truncing {}.{}...'.format(schema, table))
+                        alcsql.truncate_table(schema,table)
+                        alcsql.import_table(df,schema,table)
+                        schema, procedure_list = 'ncaa_cbb', ['MERGE_Conferences','MERGE_ConferenceTeams','MERGE_Stadiums','MERGE_StadiumTeams','MERGE_Teams']
+                        for procedure in procedure_list:
+                            print(colors.light_success_color + 'Executing {}.{} SP...'.format(schema, procedure))
+                            alcsql.execute_stored_proc(schema,procedure)
+
+            return True, 200 
+        except ValueError:
+            return False, ValueError
+
 
 # Check if this program is being run as the main program
 #This needs a function wrap
@@ -670,3 +766,5 @@ if __name__ == "__main__":
                 if k == call_list[2]:
                     if endpoint == 'Players':
                         status, status_code = wrapper.wrapper_players_active(endpoint)
+                    if endpoint == 'teams':
+                        status, status_code = wrapper.wrapper_teams(endpoint)
