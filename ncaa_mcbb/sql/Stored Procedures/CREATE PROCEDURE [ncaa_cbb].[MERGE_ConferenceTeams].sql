@@ -10,6 +10,7 @@ GO
 -- Description: <Description, , A Stored Procedure that merges ConferenceTeams. >
 -- Notes:
 -- <1, , Created>
+-- <2, , Included ISNULL -1 for Non-Conference Teams 03.05.23>
 -- =============================================
 
 -- =============================================
@@ -26,7 +27,7 @@ BEGIN
 
 	/*** ConferenceTeams ***/
 	SELECT DISTINCT
-		LH.[ConferenceID],
+		ISNULL(LH.[ConferenceID],-1) AS [ConferenceID],
 		LH.[TeamID],
 		LH.[GlobalTeamID],
 		GETDATE() AS [Created]
