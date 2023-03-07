@@ -1,11 +1,13 @@
 USE [sports]
 GO
 
+/****** Object:  StoredProcedure [ncaa_cbb].[MERGE_GameStats]    Script Date: 3/6/2023 5:24:22 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 -- =============================================
 -- Author:   <Author,, Awin>
@@ -13,6 +15,7 @@ GO
 -- Description: <Description,, A Stored Procedure that merges GameStats. >
 -- Notes:
 -- <1,, Created>
+-- <2, , Added DateKey 03.06.23 AW>
 -- =============================================
 
 -- =============================================
@@ -48,6 +51,7 @@ BEGIN
 		GS.[OpponentID],
 		GS.[Opponent],
 		GS.[Day],
+		CAST(TRIM(REPLACE(CAST(CAST(GS.[Day] AS DATE) AS NVARCHAR(20)),'-','')) AS [bigint]) AS [DateKey],
 		GS.[DateTime],
 		GS.[HomeOrAway],
 		GS.[IsGameOver],
@@ -118,6 +122,7 @@ BEGIN
 				TARGET.[OpponentID] = SOURCE.[OpponentID],
 				TARGET.[Opponent] = SOURCE.[Opponent],
 				TARGET.[Day] = SOURCE.[Day],
+				TARGET.[DateKey] = SOURCE.[DateKey],
 				TARGET.[DateTime] = SOURCE.[DateTime],
 				TARGET.[HomeOrAway] = SOURCE.[HomeOrAway],
 				TARGET.[IsGameOver] = SOURCE.[IsGameOver],
@@ -180,6 +185,7 @@ BEGIN
 				[OpponentID],
 				[Opponent],
 				[Day],
+				[DateKey],
 				[DateTime],
 				[HomeOrAway],
 				[IsGameOver],
@@ -241,6 +247,7 @@ BEGIN
 				SOURCE.[OpponentID],
 				SOURCE.[Opponent],
 				SOURCE.[Day],
+				SOURCE.[DateKey],
 				SOURCE.[DateTime],
 				SOURCE.[HomeOrAway],
 				SOURCE.[IsGameOver],
@@ -289,4 +296,5 @@ BEGIN
 
 END
 GO
+
 
