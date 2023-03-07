@@ -14,6 +14,7 @@ GO
 -- Notes:
 -- <1, , Created>
 -- <2, , Added DateKey 03.03.23 AW>
+-- <3, , Removed Columns 03.05. AW>
 -- =============================================
 
 -- =============================================
@@ -57,7 +58,7 @@ SELECT
 	GS.[DateKey],
 	GS.[DateTime],
 	GS.[HomeOrAway],
-	GS.[IsGameOver],
+	--GS.[IsGameOver],
 	GS.[GlobalGameID],
 	GS.[GlobalOpponentID],
 	--GS.[StatUpdated],

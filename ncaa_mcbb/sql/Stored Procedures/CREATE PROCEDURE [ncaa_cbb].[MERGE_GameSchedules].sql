@@ -13,6 +13,7 @@ GO
 -- Description: <Description, , A Stored Procedure that merges GameStats. >
 -- Notes:
 -- <1, , Created>
+-- <2, , Added DateKey 03.06.23 AW>
 -- =============================================
 
 -- =============================================
@@ -34,7 +35,7 @@ BEGIN
 		GS.[SeasonType],
 		GS.[GameStatus],
 		GS.[GameDay],
-		CAST(TRIM(REPLACE(CAST(CAST([GameDay] AS DATE) AS NVARCHAR(20)),'-','')) AS [bigint]) AS [DateKey],
+		CAST(TRIM(REPLACE(CAST(CAST(GS.[GameDay] AS DATE) AS NVARCHAR(20)),'-','')) AS [bigint]) AS [DateKey],
 		GS.[GameDateTime],
 		GS.[AwayTeam],
 		GS.[HomeTeam],
@@ -83,6 +84,7 @@ BEGIN
 				TARGET.[GameStatus] = SOURCE.[GameStatus],
 				TARGET.[GameDay] = SOURCE.[GameDay],
 				TARGET.[GameDateTime] = SOURCE.[GameDateTime],
+				TARGET.[DateKey] = SOURCE.[DateKey],
 				TARGET.[AwayTeam] = SOURCE.[AwayTeam],
 				TARGET.[HomeTeam] = SOURCE.[HomeTeam],
 				TARGET.[AwayTeamID] = SOURCE.[AwayTeamID],
@@ -123,6 +125,7 @@ BEGIN
 				[GameStatus],
 				[GameDay],
 				[GameDateTime],
+				[DateKey],
 				[AwayTeam],
 				[HomeTeam],
 				[AwayTeamID],
@@ -162,6 +165,7 @@ BEGIN
 				SOURCE.[GameStatus],
 				SOURCE.[GameDay],
 				SOURCE.[GameDateTime],
+				SOURCE.[DateKey],
 				SOURCE.[AwayTeam],
 				SOURCE.[HomeTeam],
 				SOURCE.[AwayTeamID],

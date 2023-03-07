@@ -15,6 +15,7 @@ GO
 -- <1, , Created>
 -- <2, , Fixed IS NOT NULL on scores AW 03.02.23>
 -- <3, , Added DateKey AW 03.03.23>
+-- <4, , Removed Columns AW 03.05.23>
 -- =============================================
 
 -- =============================================
@@ -37,19 +38,29 @@ GO
 CREATE VIEW [ncaa_cbb].[vw_GameScheduleFacts] AS
 SELECT 
 	[GameID], 
-	[GameStatus], 
-	[GameDay],
+	[GameStatus],
+	CASE 
+		WHEN [GameStatus] = 'F/OT' 
+			THEN 1 
+		ELSE 0
+	END AS [OverTime],
+	--[GameDay],
 	[DateKey],
 	[GameDateTime], 
-	[AwayTeamID], 
-	[HomeTeamID], 
+	--[AwayTeamID], 
+	--[HomeTeamID], 
 	[AwayTeamScore], 
 	[HomeTeamScore], 
-	[GameUpdated], 
-	[Period], 
-	[IsClosed], 
+	--[GameUpdated], 
+	--[Period], 
+	--[IsClosed], 
+	[GlobalAwayTeamID],
+	[GlobalHomeTeamID],
 	[GameEndDateTime], 
-	[Channel]
+	[Channel],
+	CASE WHEN [Channel] IS NULL THEN 0 ELSE 1 END AS [Televised],
+	ABS([HomeTeamScore] - [AwayTeamScore]) AS [PointDifferential],
+	DATEDIFF(MINUTE,[GameDateTime], [GameEndDateTime]) AS [GameDurationMin]
 FROM [ncaa_cbb].[GameSchedules]
 WHERE ([AwayTeamScore] IS NOT NULL AND [HomeTeamScore] IS NOT NULL)
 AND [GameStatus] IN ('F/OT', 'Final')
