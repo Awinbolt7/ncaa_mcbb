@@ -223,3 +223,47 @@ BEGIN
 	) 
 END
 GO
+
+IF NOT EXISTS (SELECT * FROM [sys].[tables] WHERE [name] = 'Seasons')
+BEGIN
+	CREATE TABLE [ncaa_cbb].[Seasons]
+	(
+		[Season] [int] NULL,
+		[StartYear] [int] NULL,
+		[EndYear] [int] NULL,
+		[Description] [nvarchar](25) NULL,
+		[RegularSeasonStartDate] [datetime] NULL,
+		[RegularSeasonEndDate] [datetime] NULL,
+		[PostSeasonStartDate] [datetime] NULL,
+		[PostSeasonEndDate] [datetime] NULL,
+		[ApiSeason] NVARCHAR(25) NULL
+	) 
+
+	INSERT INTO [ncaa_cbb].[Seasons]
+	(
+		[Season],
+		[StartYear],
+		[EndYear],
+		[Description],
+		[RegularSeasonStartDate],
+		[RegularSeasonEndDate],
+		[PostSeasonStartDate],
+		[PostSeasonEndDate],
+		[ApiSeason]
+	)
+	VALUES
+	(
+		2023,
+		2022,
+		2023,
+		'2022-23',
+		'2022-11-01T00:00:00',
+		'2023-03-11T00:00:00',
+		'2023-03-12T00:00:00',
+		'2023-04-30T00:00:00'
+
+	)
+
+
+END
+GO
