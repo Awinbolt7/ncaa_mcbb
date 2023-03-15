@@ -13,6 +13,7 @@ GO
 -- Description: <Description, , A view that selects from ActivePlayers. >
 -- Notes:
 -- <1, , Created>
+-- <2, , Added FullName, FullNameKey AW 03.11.23>
 -- =============================================
 
 -- =============================================
@@ -37,6 +38,8 @@ SELECT
 	[PlayerID],
 	[FirstName],
 	[LastName],
+	ISNULL([LastName],'No Last Name, ') + ', ' + ISNULL([FirstName],' No First Name') AS [FullName],
+	ISNULL([LastName],'No Last Name, ') + ', ' + ISNULL([FirstName],' No First Name') + ' (' + CAST([PlayerID] AS NVARCHAR(15)) + ')' AS [FullNameKey],
 	[TeamID],
 	[Team],
 	[Jersey],
